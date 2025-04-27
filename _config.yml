@@ -116,10 +116,10 @@ comments:
     issue_term: # < url | pathname | title | ...>
   # Giscus options › https://giscus.app
   giscus:
-    repo: tjvm0877/its-blog
-    repo_id:
-    category:
-    category_id:
+    repo: tjvm0877/tjvm0877.github.io
+    repo_id: R_kgDOOOOUhA
+    category: Comments
+    category_id: DIC_kwDOOOOUhM4CphKW
     mapping: # optional, default to 'pathname'
     strict: # optional, default to '0'
     input_position: # optional, default to 'bottom'
