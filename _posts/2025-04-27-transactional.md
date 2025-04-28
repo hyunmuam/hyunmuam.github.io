@@ -2,7 +2,7 @@
 title: "@Transactional 제대로 알아보기 - 1"
 date: 2025-04-28 16:00:00 +0900
 categories: [Spring]
-tags: ["Sprint"]
+tags: ["Spring"]
 image:
   path: /assets/img/posts/2025-04-27-transactional/01.png
 ---
