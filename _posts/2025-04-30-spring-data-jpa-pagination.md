@@ -1,5 +1,5 @@
 ---
-title: Spring Data JPA에서의 페이지네이션과 정렬
+title: Spring Data JPA에서의 페이지네이션과 정렬 방법을 정리해보자
 date: 2025-04-30 19:00:00 +0900
 categories: [Spring]
 tags: [spring, jpa]
@@ -176,7 +176,7 @@ public interface Page<T> extends Slice<T> {
 ```
 ## 직접 사용해보기
 ---
-> 전체 프로젝트 코드는 [Github](https://github.com/tjvm0877/blog-code/tree/main/transactional)에 있으니 참고해주세요.
+> 전체 프로젝트 코드는 [Github](https://github.com/tjvm0877/blog-code/tree/main/spring-data-jpa-pagination)에 있으니 참고해주세요.
 {: .prompt-info }
 
 ### 기본적인 페이지네이션
@@ -367,12 +367,12 @@ fetch
 ```
 {: file='p6spy 라이브러리를 이용한 쿼리 파라미터 확인'}
 
-Spring Data JPA는 **전달된 페이지 사이즈에 1을 더한 값으로 쿼리를 실행**한다. 즉, 총 6개의 데이터를 쿼리하는 것이다.
+Spring Data JPA는 **전달된 페이지 사이즈에 1을 더한 값으로 쿼리를 실행**한다. 즉, 총 6개의 데이터를 쿼리하는 것이다.위 쿼리를 통해 불러온 데이터가 실제로 6개라면, 다음 슬라이스가 존재한다는 의미이다. 이를 통해 다음 페이지의 존재여부를 확인할 수 있다.
 
 ## 마무리
 페이지네이션은 대용량 데이터를 효율적으로 다루기 위한 필수적인 기술이기 때문에 언제한번 정리가 필요하다고 생각했다.
 
-특히 Spring Data JPA는 복잡한 SQL이나 로직 없이도 `Pageable`과 `Sort` 파라미터만으로 간단하게 페이징과 정렬을 구현할 수 있도록 도와준다. `Slice`와 `Page` 타입을 적절히 선택하면, 전체 데이터 개수가 필요한지 여부에 따라 불필요한 count 쿼리를 줄일 수 있고, 성능 최적화에도 도움이 된다. 또한, 조회 결과를 DTO로 매핑하는 map() 메서드 활용법까지 익혀두면, API 응답 구조를 유연하게 설계할 수 있을 것이다.
+특히 Spring Data JPA는 복잡한 SQL이나 로직 없이도 `Pageable`과 `Sort` 파라미터만으로 간단하게 페이징과 정렬을 구현할 수 있도록 도와준다. `Slice`와 `Page` 타입을 적절히 선택하면, 전체 데이터 개수가 필요한지 여부에 따라 불필요한 count 쿼리를 줄일 수 있고, 성능 최적화에도 도움이 된다. 또한, 조회 결과를 DTO로 매핑하는 `map()` 메서드 활용법까지 익혀두면, API 응답 구조를 유연하게 설계할 수 있을 것이다.
 
 추가로 Spring MVC에서는 `HandlerMethodArgumentResolver`를 통해서 Controller계층에서 바로 `Pageable`을 파라미터로 받을 수 있다. 이 부분은 다음에 `ArgumentResolver` 관련 포스트에서 알아보도록 하자.
 
