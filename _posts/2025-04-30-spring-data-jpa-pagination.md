@@ -3,6 +3,8 @@ title: Spring Data JPA에서의 페이지네이션과 정렬 방법을 정리해
 date: 2025-04-30 19:00:00 +0900
 categories: [Spring]
 tags: [spring, jpa]
+image:
+  path: /assets/img/posts/2025-04-30-spring-data-jpa-pagination/04.png
 ---
 ## 페이지네이션 (Pagination)
 ---
@@ -351,6 +353,7 @@ void test() {
 `Slice<Item>` 가 `Slice<ItemDto>` 로 잘 변환한 것을 확인할 수 있다.
 
 ## Slice는 어떻게 다음 페이지(Slice)의 존재 유무를 판단할까?
+---
 `Slice` 는 분명 `count` 쿼리를 실행하지 않아서 전체 페이지 개수를 알 수 없다고 했다. 그런데, `Slice` 인터페이스 코드를 보면 `isFirst()` , `isLast()` , `hasNext()` , `hasPrevious()` 와 같이 전체 페이지 개수를 알아야지만 실행할 수 있는 메소드를 제공할 수 있는 것 일까? 해답은 JPA에서 보내는 쿼리에 있었다.
 
 ```
@@ -377,6 +380,7 @@ Spring Data JPA는 **전달된 페이지 사이즈에 1을 더한 값으로 쿼�
 추가로 Spring MVC에서는 `HandlerMethodArgumentResolver`를 통해서 Controller계층에서 바로 `Pageable`을 파라미터로 받을 수 있다. 이 부분은 다음에 `ArgumentResolver` 관련 포스트에서 알아보도록 하자.
 
 ## 참고
+---
 자바 ORM 표준 JPA 프로그래밍, 김영한
 
 [Spring Data JPA에서의 페이지네이션과 정렬 \| hudi.blog](https://hudi.blog/spring-data-jpa-pagination/)
