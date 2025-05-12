@@ -16,7 +16,7 @@ timezone: Asia/Seoul
 
 title: Dev-its # the main title
 
-tagline: hello # it will display as the subtitle
+tagline: 경험하고, 공부하고 기록하기 # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
   경험하고, 공부하고 기록하기
