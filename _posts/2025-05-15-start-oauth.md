@@ -1,5 +1,5 @@
 ---
-title: "OAuth 2.0 개념과 동작 원리 정리"
+title: "OAuth 개념과 동작 원리를 정리해보자"
 date: 2025-05-15 14:30:00 +0900
 categories: [Security]
 tags: [auth]
