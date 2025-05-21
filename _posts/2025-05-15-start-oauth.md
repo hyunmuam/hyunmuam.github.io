@@ -17,7 +17,7 @@ image:
 ![Desktop View](/assets/img/posts/2025-05-15-start-oauth/02.png){: width="972" height="589" }
 _OAuth 예시_
 
-위 예시와 같이 다른 웹사이트(페이스북, 구글 등) 상의 정보를 웹사이트에서 가져올 수 있다.
+OAuth를 통해 위 예시와 같이 외부의 플랫폼에서 자신의 리소스(구글 드라이브 파일 등)에 접근할 수 있다.
 
 ## OAuth 등장 배경
 ---
@@ -92,7 +92,7 @@ Resource Owner를 성공적으로 인증하고 인가를 획득한 후, Client�
 ![Desktop View](/assets/img/posts/2025-05-15-start-oauth/04.png){: width="972" height="589" }
 _OAuth 2.0 워크플로우_
 
-1. `Client`는 `Resource Owner`에게 인증 요청을 보낸다. 인가 요청은 `Resource Owner`에게 직접 할 수도 있고(위 그림과 같이), 또는 `Authorization Server`를 중개자로 하여 간접적으로 할 수도 있다.
+1. `Client`는 `Resource Owner`에게 인증 요청을 보낸다. 인증 요청은 `Resource Owner`에게 직접 할 수도 있고(위 그림과 같이), 또는 `Authorization Server`를 중개자로 하여 간접적으로 할 수도 있다.
 2. `Client`는 인가 허가(authorization grant)를 받게된다. 인가 허가는 `Resource Owner`의 인가를 나타내는 자격 증명으로, 아래에서 더 자세히 다루겠다.
 3. `Client`는 `Authorization Server`에 인증하고, 인가 허가를 제시하여 엑세스 토큰을 요청한다.
 4. `Authorization Server`는 `Client`를 인증하고 인가 허가를 검증한 후, 유효하다면 Access Token을 발급한다.
@@ -102,19 +102,19 @@ _OAuth 2.0 워크플로우_
 `Client`가 리소스 소유자로부터 인가 허가(`Authorization grant`)를 얻는데 있어 권장되는 방법은 `Authorization Server`를 중계자로 사용하는 것이다.
 
 공식 명세(RFC 6749)와 주요 기술 문서에서 정의된 주요 권한 부여 방식은 다음과 같다.
-1. Authorization Code Grant
+1. `Authorization Code Grant`
 	- 사용자가 인정 서버를 통해 인증 및 승인을 완료하면, `Client`는 일회성 권한 부여 코드를 받게 되고 이 코드를 이용해 AccessToken을 교환하는 방식
 	- 리다이렉션 기반 흐름으로, `Client`는 `Resource Owner`의 사용자 에이전트(일반적으로 웹 브라우저)와 상호 작용할 수 있어야 하며, `Authorization Server`로부터 수신 요청을 받을 수 있어야 한다.
-2. Implicit Grant
+2. `Implicit Grant`
 	- 인증 서버가 권한 부여 코드 없이 직접 엑세스 토큰을 발급받는 방식
 	- JavaScript와 같은 스크립팅 언어를 사용하여 브라우저에서 구현된 `Client`를 위해 최적화된 간소화된 인증 코드 흐름이다.
 	- 인증 코드를 발급하는 대신 클라이언트에게 직접 액세스 토큰이 발급된다.
-3. Resource Owner Password Credentials Grant
+3. `Resource Owner Password Credentials Grant`
 	- 사용자가 자신의 아이디와 비밀번호를 `Client`에 직접 입력하여 AccessToken을 발급받는 방식
 	- 리소스 소유자와 클라이언트 간에 높은 신뢰도가 있을 때만 사용해야 한다.
 	- 다른 권한 부여 유형을 사용할 수 없을 때 사용된다.
 	- 일반적으로 이 방식의 사용을 권장하지 않는다.
-4. Client Credentials Grant
+4. `Client Credentials Grant`
 	- `Client`가 자신의 권한 하에 있는 보호된 리소스에 접근하거나 `Authorization Server`와 사전에 협의된 `Protected Resource`에 접근할 때 사용
 
 
@@ -135,6 +135,129 @@ _OAuth 2.0 워크플로우_
 5. 사용환경이 제한적이다.
 	- OAuth 2.0은 위에 서술한 다양한 `Authorization grant`를 도입해 다양한 플랫폼과 시나리오를 지원
 
+
+## OAuth 2.0 실습
+---
+구글에서는 [OAuth 2.0 Playground](https://developers.google.com/oauthplayground/)를 통해 인증 및 권한 부여 흐름에 실습하고 테스트할 수 있는 웹 기반 도구를 제공한다.
+
+이를 이용하여 실제 OAuth 2.0를 단계별 HTTP메시지를 분석해보고 직접 엑세스 토큰과 리프레시 토큰을 받급받아 다양한 GooGle API 호출을 테스트할 수 있다.
+이 도구를 이용하여 Google Drive에 있는 파일 목록을 확인해보자.
+
+### 1. 인증 요청
+```
+HTTP/1.1 302 Found
+Location:
+  https://accounts.google.com/o/oauth2/v2/auth?
+  redirect_uri=https%3A%2F%2Fdevelopers.google.com%2Foauthplayground&
+  prompt=consent&response_type=code&
+  client_id=407408718192.apps.googleusercontent.com&
+  scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive&
+  access_type=offline
+```
+이 HTTP 응답은 OAuth 2.0 인증 흐름의 첫 단계로, 클라이언트가 사용자를 Google의 인증 서버로 리다이렉트하는 과정이다. 상태 코드 `302 Found`는 임시 리다이렉션을 의미하며, Location 헤더에 사용자가 이동할 URL이 포함되어 있다.
+
+| 파라미터        | 설명                                                                                                                    |
+| :-------------- | :---------------------------------------------------------------------------------------------------------------------- |
+| `redirect_uri`  | 인증 완료 후 사용자가 리다이렉트될 URI                                                                                  |
+| `prompt`        | 사용자에게 동의 화면을 표시하도록 요청한다.                                                                             |
+| `response_type` | `Authorization Code` 방식을 사용함을 나타낸다.<br>이는 서버 사이드 애플리케이션에서 주로 사용되는 방식이다.             |
+| `client_id`     | Google API 콘솔에 등록된 애플리케이션 고유 식별자                                                                       |
+| `scope`         | 애플리케이션이 요청하는 권한 범위<br>이 경우 Google Drive에 대한 접근을 요청하고 있다.                                  |
+| `access_type`   | 오프라인 접근을 요청하여 사용자가 로그아웃한 후에도<br>애플리케이션이 리프레시 토큰을 통해 API에 접근할 수 있도록 한다. |
+
+리다이렉트되면 다음과 같은 익숙한 화면을 볼 수 있다.
+![Desktop View](/assets/img/posts/2025-05-15-start-oauth/05.png){: width="972" height="589" }
+_리다이렉트된 URL 화면_
+
+### 2. 인가 허가 부여
+```
+GET /oauthplayground/?
+  code=4/0AUJR-x4C6wsmRRMzhwTiq_qyA8sr6j1upmq_PLeLE7S4vkRMqQ3W6_6KJ1ZRT2RwurR5KQ&
+  scope=https://www.googleapis.com/auth/drive 
+  HTTP/1.1
+Host: developers.google.com
+```
+이 HTTP 요청은 OAuth 2.0 인증 흐름의 두 번째 단계로, 사용자가 인증 및 권한 부여를 완료한 후 Google 인증 서버가 클라이언트의 리다이렉트 URI(OAuth Playground)로 사용자를 리다이렉트하는 과정이다. 이 요청에는 인증 코드와 승인된 스코프 정보가 포함되어 있다.
+
+| 파라미터 | 설명                                                                                                                                                                                             |
+| :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| code     | 인증 서버가 발급한 일회용 인증 코드<br>이 코드는 짧은 수명을 가지며, 클라이언트가 Access Token과 Refresch Token을 요청하는 데 사용된다.<br>이 코드는 보안상의 이유로 한 번만 사용할 수 있습니다. |
+| scope    | 사용자가 실제로 승인한 권한 범위이다.<br>이 경우 Google Drive에 대한 전체 접근 권한을 의미한다.                                                                                                  |
+
+### 3. 인가 허가 제시
+```
+POST /token HTTP/1.1
+Host: oauth2.googleapis.com
+Content-length: 261
+content-type: application/x-www-form-urlencoded
+user-agent: google-oauth-playground
+
+code=4%2F0AUJR-x4C6wsmRRMzhwTiq_qyA8sr6j1upmq_PLeLE7S4vkRMqQ3W6_6KJ1ZRT2RwurR5KQ&
+  redirect_uri=https%3A%2F%2Fdevelopers.google.com%2Foauthplayground&
+  client_id=407408718192.apps.googleusercontent.com&
+  client_secret=************&scope=&
+  grant_type=authorization_code
+```
+OAuth 2.0 인증 흐름의 세 번째 단계로, 클라이언트가 이전 단계에서 받은 인증 코드를 사용하여 Google의 토큰 엔드포인트에 액세스 토큰을 요청하는 과정이다.
+
+| 파라미터      | 설명                                                                                                                                                   |
+| :------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| code          | 이전 단계에서 받은 인증 코드. 이 코드는 일회용이며 짧은 수명을 가진다.                                                                                 |
+| redirect_uri  | 인증 코드를 받을 때 사용한 리다이렉트 URI와 정확히 일치해야 한다.<br>이 파라미터는 인증 코드 요청에 포함되었다면 토큰 요청에도 반드시 포함되어야 한다. |
+| client_id     | Google API 콘솔에 등록된 클라이언트 애플리케이션의 고유 식별자                                                                                         |
+| client_secret | 클라이언트 애플리케이션의 비밀 키. 이 값은 절대 공개되어서는 안된다.                                                                                   |
+| grant_type    | 요청하는 토큰의 유형. `authorization_code`는 인증 코드를 액세스 토큰으로 교환하는 OAuth 2.0 흐름을 지정                                                |
+
+### 4. Access Token 발급
+```
+HTTP/1.1 200 OK
+...
+Content-type: application/json; charset=utf-8
+{
+  "access_token": "ya29.a0AW4...", 
+  "refresh_token_expires_in": 604799, 
+  "expires_in": 3599, 
+  "token_type": "Bearer", 
+  "scope": "https://www.googleapis.com/auth/drive", 
+  "refresh_token": "1//04G5qSUv4..."
+}
+```
+OAuth 2.0 인증 흐름의 네 번째 단계로, 인증 서버(Google)가 클라이언트의 토큰 요청에 대한 응답으로 액세스 토큰과 리프레시 토큰을 발급하는 과정이다.
+이 단계 이후, 클라이언트는 발급받은 액세스 토큰을 사용하여 Google Drive API와 같은 보호된 리소스에 접근할 수 있으며, 액세스 토큰이 만료되면 리프레시 토큰을 사용하여 새로운 액세스 토큰을 요청할 수 있다.
+
+| 파라미터                 | 설명                                                                                                        |
+| :----------------------- | :---------------------------------------------------------------------------------------------------------- |
+| access_token             | 보호된 리소스에 접근하기 위한 자격 증명, 이 토큰을 API 요청의 `Authorization` 헤더에 포함시켜 사용          |
+| refresh_token            | `Access Token`이 만료된 후 새로운 `Access Token`을 얻기 위해 사용하는 토큰                                  |
+| scope                    | 발급된 토큰이 접근할 수 있는 권한 범위                                                                      |
+| token_type               | 토큰의 유형, Bearer는 HTTP 요청의 `Authorization` 헤더에 `Bearer` 접두사와 함께 토큰을 포함시켜야 함을 의미 |
+| expires_in               | `Access Token`의 유효 기간(초)                                                                              |
+| refresh_token_expires_in | `Refresh Token`의 유효 기간(초)                                                                             |
+
+### 4. Access Token 제출
+
+```
+GET /drive/v3/files HTTP/1.1
+Host: www.googleapis.com
+Content-length: 0
+Authorization: Bearer ya29.a0AW4...
+```
+OAuth 2.0 인증 흐름의 최종 단계로, 클라이언트가 발급받은 액세스 토큰을 사용하여 Google Drive API에 접근하는 요청이다.
+Authorization헤더에 이전 단계에서 발급받은 AccessToken을 넣은것을 알 수 있다.
+
+### 5. Protected Resource 전달
+```
+HTTP/1.1 200 OK
+Content-location: https://www.googleapis.com/drive/v3/files
+Content-type: application/json; charset=UTF-8
+...
+
+{
+  "files": [...]
+}
+  ...
+```
+정상적으로 Google Drive의 데이터를 받아온 것을 확인할 수 있다.
 
 ## 마무리
 ---
