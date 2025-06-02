@@ -2,7 +2,7 @@
 title: "OAuth 개념과 동작 원리를 정리해보자"
 date: 2025-05-15 14:30:00 +0900
 categories: [Security]
-tags: [auth]
+tags: [oauth]
 image:
   path: /assets/img/posts/2025-05-15-start-oauth/01.png
 ---
