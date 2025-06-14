@@ -8,7 +8,7 @@ image:
 mermaid: true
 ---
 이제는 소셜로그인을 지원하지 않는 서비스를 찾는 것이 더 어려워졌다. 어찌보면 당연한 현상이다. 서비스별로 아이디와 암호를 모두 외우는 대신 계정 하나의 아이디와 암호만 외우는 게 이용자로 하여금 훨씬 쉽기 때문에 그만큼 빠르게 보급되었다.
-이 소셜로그인은 바로 지난 포스트에서 알아본 [OAuth]("https://tjvm0877.github.io/posts/start-oauth/")와 [OIDC(OpenID Connect)]("https://tjvm0877.github.io/posts/oidc/")를 통해서 구현되는 기능이다. 이번 포스팅에서는 Spring을 이용하여 직접 소셜로그인을 구현해보고, 그 동작원리를 이해해보고자 한다.
+이 소셜로그인은 바로 지난 포스트에서 알아본 [OAuth](https://tjvm0877.github.io/posts/start-oauth)와 [OIDC(OpenID Connect)](https://tjvm0877.github.io/posts/oidc)를 통해서 구현되는 기능이다. 이번 포스팅에서는 Spring을 이용하여 직접 소셜로그인을 구현해보고, 그 동작원리를 이해해보고자 한다.
 
 ## 프로젝트 개요
 ---
