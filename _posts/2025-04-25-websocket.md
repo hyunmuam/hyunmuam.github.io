@@ -117,7 +117,7 @@ Sec-WebSocket-Accept: s3pPLMBiTxaQ9kYGzzhZRbK+xOo=
 
 ## 간단한 구현
 ---
-> 전체 프로젝트 코드는 [Github](https://github.com/tjvm0877/blog-code/tree/main/web-socket-app)에 있으니 참고해주세요.
+> 전체 프로젝트 코드는 [Github](https://github.com/hyunmuam/blog-code/tree/main/web-socket-app)에 있으니 참고해주세요.
 {: .prompt-info }
 웹소켓에 대한 개념을 웹소켓을 이용한 여러 클라이언트를 연결하는 간단한 대화방 앱을 만들어보자.
 ![Desktop View](/assets/img/posts/2025-04-25-WebSocket/02.png){: width="972" height="589" }
@@ -184,7 +184,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 {: file='WebSocketConfig'}
 
 ### WebSocket in JS
-> 전체 코드는 [Github](https://github.com/tjvm0877/blog-code/tree/main/web-socket-app/client)에 있으니 참고해주세요.
+> 전체 코드는 [Github](https://github.com/hyunmuam/blog-code/tree/main/web-socket-app/client)에 있으니 참고해주세요.
 {: .prompt-info }
 WebSocket API는 브라우저에서 지원하는 웹 표준 API가 있다. JavaScript를 통해 접근할 수 있으며, 브라우저에 내장된 기능이다. 이 API를 이용하여 간단하게 웹소켓을 사용할 수 있도록 도와준다.
 

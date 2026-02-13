@@ -98,7 +98,7 @@ public interface HandlerMethodArgumentResolver {
 ```
 ## 직접 사용해보기
 ---
-> 전체 프로젝트 코드는 [Github](https://github.com/tjvm0877/blog-code/tree/main/argument-resolver)에 있으니 참고해주세요.
+> 전체 프로젝트 코드는 [Github](https://github.com/hyunmuam/blog-code/tree/main/argument-resolver)에 있으니 참고해주세요.
 {: .prompt-info }
 이제 `ArgumentResolver`를 직접 구현해보도록 하자.
 
@@ -226,7 +226,7 @@ public ResponseEntity<Void> create1(@UserInfo UserDto userDto) {
 위와 같이 `@UserInfo`가 붙은 경우에만 `UserDto` 가 바인딩 되도록 만들 수 있다.
 
 ### PageableHandlerMethodArgumentResolver
-여담으로 [저번 포스트](https://tjvm0877.github.io/posts/spring-data-jpa-pagination/)에서 ArgumentResolver를 통해서 Pageable을 받을 수 있다고 했다.
+여담으로 [저번 포스트](https://hyunmuam.github.io/posts/spring-data-jpa-pagination/)에서 ArgumentResolver를 통해서 Pageable을 받을 수 있다고 했다.
 해당 동작을 가능하도록 만들어주는 것이 바로 `PageableHandlerMethodArgumentResolver`이다.
 ArgumentResolver의 구조를 위에서 보았기 때문에 구현체만 봐도 어떻게 동작하는지 알 수 있다.
 ```java

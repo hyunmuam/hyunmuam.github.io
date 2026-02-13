@@ -8,7 +8,7 @@ image:
 mermaid: true
 ---
 이제는 소셜로그인을 지원하지 않는 서비스를 찾는 것이 더 어려워졌다. 어찌보면 당연한 현상이다. 서비스별로 아이디와 암호를 모두 외우는 대신 계정 하나의 아이디와 암호만 외우는 게 이용자로 하여금 훨씬 쉽기 때문에 그만큼 빠르게 보급되었다.
-이 소셜로그인은 바로 지난 포스트에서 알아본 [OAuth](https://tjvm0877.github.io/posts/start-oauth)와 [OIDC(OpenID Connect)](https://tjvm0877.github.io/posts/oidc)를 통해서 구현되는 기능이다. 이번 포스팅에서는 Spring을 이용하여 직접 소셜로그인을 구현해보고, 그 동작원리를 이해해보고자 한다.
+이 소셜로그인은 바로 지난 포스트에서 알아본 [OAuth](https://hyunmuam.github.io/posts/start-oauth)와 [OIDC(OpenID Connect)](https://hyunmuam.github.io/posts/oidc)를 통해서 구현되는 기능이다. 이번 포스팅에서는 Spring을 이용하여 직접 소셜로그인을 구현해보고, 그 동작원리를 이해해보고자 한다.
 
 ## 프로젝트 개요
 ---
@@ -25,7 +25,7 @@ Spring Boot로 구현된 REST API 서버와 React로 구현된 클라이언트�
 
 그리고 그 결과로 플랫폼에서 접근을 허용해주는 `client_id`와 `client_secret`을 전달하여 접근을 허용해준다.
 
-> 간단한 앱 등록 방식은 아래 주소에 정리해두었다.<br>[Google 앱 등록](https://github.com/tjvm0877/blog-code/blob/main/start-oauth/docs/google.md)<br>[Kakao 앱 등록](https://github.com/tjvm0877/blog-code/blob/main/start-oauth/docs/kakao.md)
+> 간단한 앱 등록 방식은 아래 주소에 정리해두었다.<br>[Google 앱 등록](https://github.com/hyunmuam/blog-code/blob/main/start-oauth/docs/google.md)<br>[Kakao 앱 등록](https://github.com/hyunmuam/blog-code/blob/main/start-oauth/docs/kakao.md)
 {: .prompt-info }
 
 ## Spring Security OAuth 2.0 Client
@@ -161,7 +161,7 @@ sequenceDiagram
 ```
 
 ### 클라이언트(React) 구현
-> 전체 프로젝트 코드는 [Github](https://github.com/tjvm0877/blog-code/tree/main/start-oauth/front-end)에 있으니 참고해주세요.
+> 전체 프로젝트 코드는 [Github](https://github.com/hyunmuam/blog-code/tree/main/start-oauth/front-end)에 있으니 참고해주세요.
 {: .prompt-info }
 
 React 기반 클라이언트는 아래 두 가지 핵심 역할을 수행한다.
@@ -232,7 +232,7 @@ React 기반 클라이언트는 아래 두 가지 핵심 역할을 수행한다.
   {: file='/src/page/Callback.tsx'}
 
 ### 서버(Spring) 구현
-> 전체 프로젝트 코드는 [Github](https://github.com/tjvm0877/blog-code/tree/main/start-oauth/oauth)에 있으니 참고해주세요.
+> 전체 프로젝트 코드는 [Github](https://github.com/hyunmuam/blog-code/tree/main/start-oauth/oauth)에 있으니 참고해주세요.
 {: .prompt-info }
 
 Spring 기반으로 만들어진 서버는 다음과 같은 역할을 수행한다.

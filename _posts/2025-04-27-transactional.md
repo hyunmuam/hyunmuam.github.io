@@ -114,7 +114,7 @@ _[트랜잭션 프록시(transactional proxy)에서 메서드를 호출하는 �
 
 
 ## @Transactional 사용
-> 전체 프로젝트 코드는 [Github](https://github.com/tjvm0877/blog-code/tree/main/transactional)에 있으니 참고해주세요.
+> 전체 프로젝트 코드는 [Github](https://github.com/hyunmuam/blog-code/tree/main/transactional)에 있으니 참고해주세요.
 {: .prompt-info }
 
 이제 간단 사용법을 알아보자, 예제 코드는 다음과 같다.

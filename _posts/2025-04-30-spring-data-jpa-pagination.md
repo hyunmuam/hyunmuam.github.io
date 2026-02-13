@@ -178,7 +178,7 @@ public interface Page<T> extends Slice<T> {
 ```
 ## 직접 사용해보기
 ---
-> 전체 프로젝트 코드는 [Github](https://github.com/tjvm0877/blog-code/tree/main/spring-data-jpa-pagination)에 있으니 참고해주세요.
+> 전체 프로젝트 코드는 [Github](https://github.com/hyunmuam/blog-code/tree/main/spring-data-jpa-pagination)에 있으니 참고해주세요.
 {: .prompt-info }
 
 ### 기본적인 페이지네이션
